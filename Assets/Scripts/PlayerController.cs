@@ -42,11 +42,20 @@ public class PlayerController : MonoBehaviour
 
         countdown -= Time.deltaTime;
         timetext.text = countdown.ToString("f1") + "•b";
-        if (countdown <= 0)
+        if ((0 < Time.deltaTime) && (countdown <= 0) && (score < 1100))
         {
             timeup.text = "TIMEUP!!";
-            timetext.text = "0.0•b";
+            countdown = 0.0f;
             speed = 0;
+        }
+
+        if (transform.position.x <= -11) 
+        {
+            transform.position = new Vector3(0, 1, 0);
+        }
+        if (transform.position.z <= -11)
+        {
+            transform.position = new Vector3(0, 1, 0);
         }
     }
 
@@ -56,7 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
 
-            score = score + 1;
+            score = score + 100;
 
             SetCountText ();
         }
@@ -66,9 +75,11 @@ public class PlayerController : MonoBehaviour
     {
         scoreText.text = "Count:" + score.ToString();
 
-        if (score >= 3)
+        if (score >= 1100)
         {
             winText.text = "You Win!";
+
+            speed = 0;
         }
     }
 }
